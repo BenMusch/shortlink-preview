@@ -13,14 +13,19 @@ const shouldProcessNode = (node) => {
 const getPageTitle = (node) => {
   node = $(node)
   if (!shouldProcessNode(node)) return
+
+  node.attr('title', 'Loading link preview...')
   let href = node.attr('href')
   $.ajax({
     url: href,
     success: (responseHtml) => {
       let title = $(responseHtml).filter('title').text()
       node.attr('title', title.trim() || 'Could not process link')
-    }}
-  )
+    },
+    error: (response) => {
+      node.attr('title', 'Error loading link preview')
+    }
+  })
 }
 
 $(document).ready(() => $('a').each(function (i) { getPageTitle(this) }))
