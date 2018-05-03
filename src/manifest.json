@@ -1,0 +1,12 @@
+{
+  "name": "Bitly Preview",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Preview the bitly link destination",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["jquery.min.js", "app.js"]
+    }
+  ]
+}
