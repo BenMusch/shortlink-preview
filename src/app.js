@@ -7,10 +7,10 @@ const linkIsShortened = (url) => {
 
 const shouldProcessNode = (node) => {
   let href = node.attr('href')
-  return !node.attr('title') && href && linkIsShortened(href)
+  return node.is('a') && !node.attr('title') && href && linkIsShortened(href)
 }
 
-const getPageTitle = (node) => {
+const addLinkPreview = (node) => {
   node = $(node)
   if (!shouldProcessNode(node)) return
 
@@ -28,4 +28,5 @@ const getPageTitle = (node) => {
   })
 }
 
-$(document).ready(() => $('a').each(function (i) { getPageTitle(this) }))
+$(document).ready(() => $('a').each(function (i) { addLinkPreview(this) }))
+$(document).on('DOMNodeInserted', (e) => addLinkPreview(e.target));
